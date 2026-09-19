@@ -2,6 +2,9 @@ package com.apotheosish;
 
 import net.fabricmc.api.ModInitializer;
 
+import com.apotheosish.config.ApotheosIshConfig;
+import com.apotheosish.registry.ApotheosIshItems;
+
 import net.minecraft.resources.Identifier;
 
 import org.slf4j.Logger;
@@ -21,7 +24,9 @@ public class ApotheosIsh implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		LOGGER.info("Hello Fabric world!");
+		ApotheosIshItems.initialize();
+		ApotheosIshConfig.load();
+		LOGGER.info("Loaded Apotheos-ish configuration.");
 	}
 
 	public static Identifier id(String path) {
