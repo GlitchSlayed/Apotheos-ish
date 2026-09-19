@@ -38,9 +38,10 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	// YACL provides the in-game configuration screens.
-	modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
-	modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
+	// YACL provides the in-game configuration screens. Loom 1.17 exposes Fabric
+	// dependencies through the standard implementation configuration.
+	implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+	compileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 processResources {
