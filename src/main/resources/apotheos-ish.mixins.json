@@ -3,7 +3,9 @@
 	"package": "com.apotheosish.mixin",
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
-		"ExampleMixin"
+		"SugarCaneBlockMixin",
+		"BaseSpawnerMixin",
+		"LivingEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

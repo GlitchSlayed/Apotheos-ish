@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "enchantments": [
+              {"enchantment": "minecraft:silk_touch", "levels": {"min": 1}}
+            ]
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "apotheos-ish:spawner",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {"source": "", "target": "BlockEntityTag", "op": "replace"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
