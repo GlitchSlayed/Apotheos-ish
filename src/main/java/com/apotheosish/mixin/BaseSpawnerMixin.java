@@ -20,9 +20,9 @@ public abstract class BaseSpawnerMixin {
     @Shadow private int maxNearbyEntities;
     @Shadow private int requiredPlayerRange;
     @Shadow private int spawnRange;
-    @Shadow private boolean isNearPlayer(ServerLevel level, BlockPos position);
+    @Shadow protected abstract boolean isNearPlayer(ServerLevel level, BlockPos position);
 
-    @Inject(method = "serverTick", at = @At("HEAD"))
+    @Inject(method = "serverTick", at = @At("HEAD"), cancellable = true)
     private void apotheosIsh$applyConfiguredStats(ServerLevel level, BlockPos position, CallbackInfo callback) {
         ApotheosIshConfig.SpawnerSettings settings = ApotheosIshConfig.get().spawner;
         minSpawnDelay = Math.max(0, settings.minimumSpawnDelay);

@@ -27,15 +27,14 @@ public abstract class LivingEntityMixin {
     private void apotheosIsh$dropSpawnEgg(ServerLevel level, DamageSource damageSource, CallbackInfo callback) {
         if (!(damageSource.getEntity() instanceof Player player)) return;
         Registry<Enchantment> enchantments = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-        java.util.Optional<Holder.Reference<Enchantment>> capturing = enchantments.getHolder(CAPTURING);
+        java.util.Optional<Holder.Reference<Enchantment>> capturing = enchantments.get(CAPTURING);
         if (capturing.isEmpty()) return;
 
         int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(capturing.get(), player.getMainHandItem());
         if (enchantmentLevel <= 0 || level.getRandom().nextFloat() >= capturingChance(enchantmentLevel)) return;
 
         LivingEntity self = (LivingEntity) (Object) this;
-        SpawnEggItem egg = SpawnEggItem.byId(self.getType());
-        if (egg != null) self.spawnAtLocation(new ItemStack(egg));
+        SpawnEggItem.byId(self.getType()).ifPresent(egg -> self.spawnAtLocation(level, new ItemStack(egg)));
     }
 
     private static float capturingChance(int level) {
