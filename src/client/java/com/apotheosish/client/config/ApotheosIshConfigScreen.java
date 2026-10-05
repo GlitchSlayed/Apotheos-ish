@@ -7,8 +7,8 @@ import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 /** The client UI edits the common config file; use it on the server for authoritative spawning rules. */
 public final class ApotheosIshConfigScreen {
@@ -18,14 +18,14 @@ public final class ApotheosIshConfigScreen {
         ApotheosIshConfig config = ApotheosIshConfig.get();
         ApotheosIshConfig.SpawnerSettings spawner = config.spawner;
         return YetAnotherConfigLib.createBuilder()
-                .title(Text.translatable("text.apotheos-ish.config.title"))
+                .title(Component.translatable("text.apotheos-ish.config.title"))
                 .category(ConfigCategory.createBuilder()
-                        .name(Text.translatable("text.apotheos-ish.config.growth"))
+                        .name(Component.translatable("text.apotheos-ish.config.growth"))
                         .option(integerOption("text.apotheos-ish.config.sugar_cane_height", 1, 128,
                                 () -> config.sugarCaneMaxHeight, value -> config.sugarCaneMaxHeight = value))
                         .build())
                 .category(ConfigCategory.createBuilder()
-                        .name(Text.translatable("text.apotheos-ish.config.spawner"))
+                        .name(Component.translatable("text.apotheos-ish.config.spawner"))
                         .option(integerOption("text.apotheos-ish.config.minimum_spawn_delay", 0, 12000, () -> spawner.minimumSpawnDelay, value -> spawner.minimumSpawnDelay = value))
                         .option(integerOption("text.apotheos-ish.config.maximum_spawn_delay", 0, 12000, () -> spawner.maximumSpawnDelay, value -> spawner.maximumSpawnDelay = value))
                         .option(integerOption("text.apotheos-ish.config.spawn_count", 1, 64, () -> spawner.spawnCount, value -> spawner.spawnCount = value))
@@ -49,12 +49,12 @@ public final class ApotheosIshConfigScreen {
     }
 
     private static Option<Integer> integerOption(String key, int min, int max, java.util.function.Supplier<Integer> getter, java.util.function.Consumer<Integer> setter) {
-        return Option.<Integer>createBuilder().name(Text.translatable(key)).description(OptionDescription.of(Text.translatable(key + ".tooltip")))
+        return Option.<Integer>createBuilder().name(Component.translatable(key)).description(OptionDescription.of(Component.translatable(key + ".tooltip")))
                 .binding(min, getter, setter).controller(option -> IntegerSliderControllerBuilder.create(option).range(min, max).step(1)).build();
     }
 
     private static Option<Boolean> booleanOption(String key, java.util.function.Supplier<Boolean> getter, java.util.function.Consumer<Boolean> setter) {
-        return Option.<Boolean>createBuilder().name(Text.translatable(key)).description(OptionDescription.of(Text.translatable(key + ".tooltip")))
+        return Option.<Boolean>createBuilder().name(Component.translatable(key)).description(OptionDescription.of(Component.translatable(key + ".tooltip")))
                 .binding(false, getter, setter).controller(BooleanControllerBuilder::create).build();
     }
 }
