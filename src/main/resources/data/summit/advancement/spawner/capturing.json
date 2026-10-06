@@ -1,1 +1,32 @@
-{"parent":"summit:spawner/root","criteria":{"capture":{"conditions":{"entity":{"type":"minecraft:entity_properties","entity":"this","predicate":{"minecraft:entity_type":"minecraft:any"}},"trigger":"minecraft:player_killed_entity"}},"display":{"description":{"translate":"advancement.summit.spawner.capturing.description"},"icon":{"id":"minecraft:zombie_spawn_egg"},"title":{"translate":"advancement.summit.spawner.capturing.title"}},"requirements":[["capture"]],"sends_telemetry_event":true}
+{
+  "parent": "summit:spawner/root",
+  "criteria": {
+    "capture": {
+      "conditions": {
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "minecraft:any"
+          }
+        }
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.summit.spawner.capturing.description"
+    },
+    "icon": {
+      "id": "minecraft:zombie_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.summit.spawner.capturing.title"
+    }
+  },
+  "requirements": [
+    ["capture"]
+  ],
+  "sends_telemetry_event": true
+}
