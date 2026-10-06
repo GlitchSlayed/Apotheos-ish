@@ -36,9 +36,9 @@ public abstract class BaseSpawnerMixin {
         if (modifiers.redstoneControl && !level.hasNeighborSignal(position)) callback.cancel();
     }
 
-    @Redirect(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z"))
-    private boolean summit$ignorePlayerRequirement(BaseSpawner spawner, ServerLevel level, BlockPos position) {
-        return getSummitModifiers(level, position).ignorePlayers || isNearPlayer(level, position);
+    @Redirect(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z"))
+    private boolean summit$ignorePlayerRequirement(BaseSpawner spawner, net.minecraft.world.level.Level level, BlockPos position) {
+        return getSummitModifiers((ServerLevel) level, position).ignorePlayers || isNearPlayer(level, position);
     }
 
     @Redirect(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;tryAddFreshEntityWithPassengers(Lnet/minecraft/world/entity/Entity;)Z"))
@@ -50,7 +50,7 @@ public abstract class BaseSpawnerMixin {
     }
 
     @Shadow
-    private boolean isNearPlayer(ServerLevel level, BlockPos position) {
+    private boolean isNearPlayer(net.minecraft.world.level.Level level, BlockPos position) {
         return false;
     }
 
