@@ -1,9 +1,9 @@
-package com.apotheosish.client;
+package com.summit.client;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
-public class ApotheosIshDataGenerator implements DataGeneratorEntrypoint {
+public class SummitDataGenerator implements DataGeneratorEntrypoint {
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 

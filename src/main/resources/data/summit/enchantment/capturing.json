@@ -1,5 +1,5 @@
 {
-  "description": {"translate": "enchantment.apotheos-ish.capturing"},
+  "description": {"translate": "enchantment.summit.capturing"},
   "supported_items": "#c:tools/swords",
   "primary_items": "#c:tools/swords",
   "weight": 2,

@@ -16,7 +16,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "apotheos-ish:spawner",
+          "name": "summit:spawner",
           "functions": [
             {
               "function": "minecraft:copy_nbt",

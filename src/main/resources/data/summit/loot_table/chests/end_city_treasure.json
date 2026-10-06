@@ -11,7 +11,7 @@
           "functions": [
             {
               "function": "minecraft:enchant_randomly",
-              "options": "apotheos-ish:capturing"
+              "options": "summit:capturing"
             }
           ]
         }

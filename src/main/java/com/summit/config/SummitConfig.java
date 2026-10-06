@@ -1,36 +1,36 @@
-package com.apotheosish.config;
+package com.summit.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.apotheosish.ApotheosIsh;
+import com.summit.Summit;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-/** Server-authoritative defaults for Apotheos-ish tweaks. */
-public final class ApotheosIshConfig {
+/** Server-authoritative defaults for Summit tweaks. */
+public final class SummitConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Path FILE = FabricLoader.getInstance().getConfigDir().resolve("apotheos-ish.json");
-    private static ApotheosIshConfig instance = new ApotheosIshConfig();
+    private static final Path FILE = FabricLoader.getInstance().getConfigDir().resolve("summit.json");
+    private static SummitConfig instance = new SummitConfig();
 
     public int sugarCaneMaxHeight = 30;
     public final SpawnerSettings spawner = new SpawnerSettings();
 
-    public static ApotheosIshConfig get() {
+    public static SummitConfig get() {
         return instance;
     }
 
     public static void load() {
         try {
             if (Files.exists(FILE)) {
-                instance = GSON.fromJson(Files.readString(FILE), ApotheosIshConfig.class);
-                if (instance == null) instance = new ApotheosIshConfig();
+                instance = GSON.fromJson(Files.readString(FILE), SummitConfig.class);
+                if (instance == null) instance = new SummitConfig();
             }
             save(); // Creates a documented default config on first launch.
         } catch (IOException exception) {
-            ApotheosIsh.LOGGER.error("Could not load Apotheos-ish config", exception);
+            Summit.LOGGER.error("Could not load Summit config", exception);
         }
     }
 
@@ -39,7 +39,7 @@ public final class ApotheosIshConfig {
             Files.createDirectories(FILE.getParent());
             Files.writeString(FILE, GSON.toJson(instance));
         } catch (IOException exception) {
-            ApotheosIsh.LOGGER.error("Could not save Apotheos-ish config", exception);
+            Summit.LOGGER.error("Could not save Summit config", exception);
         }
     }
 

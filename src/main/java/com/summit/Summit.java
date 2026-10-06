@@ -1,17 +1,17 @@
-package com.apotheosish;
+package com.summit;
 
 import net.fabricmc.api.ModInitializer;
 
-import com.apotheosish.config.ApotheosIshConfig;
-import com.apotheosish.registry.ApotheosIshItems;
+import com.summit.config.SummitConfig;
+import com.summit.registry.SummitItems;
 
 import net.minecraft.resources.Identifier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ApotheosIsh implements ModInitializer {
-	public static final String MOD_ID = "apotheos-ish";
+public class Summit implements ModInitializer {
+	public static final String MOD_ID = "summit";
 
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
@@ -24,9 +24,9 @@ public class ApotheosIsh implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
-		ApotheosIshItems.initialize();
-		ApotheosIshConfig.load();
-		LOGGER.info("Loaded Apotheos-ish configuration.");
+		SummitItems.initialize();
+		SummitConfig.load();
+		LOGGER.info("Loaded Summit configuration.");
 	}
 
 	public static Identifier id(String path) {

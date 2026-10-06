@@ -1,6 +1,6 @@
-package com.apotheosish.mixin;
+package com.summit.mixin;
 
-import com.apotheosish.config.ApotheosIshConfig;
+import com.summit.config.SummitConfig;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(SugarCaneBlock.class)
 public class SugarCaneBlockMixin {
     @Inject(method = "getBlocksToGrowUpTo", at = @At("RETURN"), cancellable = true)
-    private void apotheosIsh$configureSugarCaneHeight(CallbackInfoReturnable<Integer> callback) {
-        callback.setReturnValue(Math.max(1, ApotheosIshConfig.get().sugarCaneMaxHeight));
+    private void summit$configureSugarCaneHeight(CallbackInfoReturnable<Integer> callback) {
+        callback.setReturnValue(Math.max(1, SummitConfig.get().sugarCaneMaxHeight));
     }
 }

@@ -1,9 +1,11 @@
 {
 	"required": true,
-	"package": "com.apotheosish.client.mixin",
+	"package": "com.summit.mixin",
 	"compatibilityLevel": "JAVA_25",
-	"client": [
-		"ExampleClientMixin"
+	"mixins": [
+		"SugarCaneBlockMixin",
+		"BaseSpawnerMixin",
+		"LivingEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

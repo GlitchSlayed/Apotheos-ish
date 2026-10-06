@@ -1,6 +1,6 @@
-package com.apotheosish.mixin;
+package com.summit.mixin;
 
-import com.apotheosish.ApotheosIsh;
+import com.summit.Summit;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -21,10 +21,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /** Adds Capturing's independent spawn-egg roll after vanilla has produced normal death loot. */
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-    private static final ResourceKey<Enchantment> CAPTURING = ResourceKey.create(Registries.ENCHANTMENT, ApotheosIsh.id("capturing"));
+    private static final ResourceKey<Enchantment> CAPTURING = ResourceKey.create(Registries.ENCHANTMENT, Summit.id("capturing"));
 
     @Inject(method = "dropAllDeathLoot", at = @At("TAIL"))
-    private void apotheosIsh$dropSpawnEgg(ServerLevel level, DamageSource damageSource, CallbackInfo callback) {
+    private void summit$dropSpawnEgg(ServerLevel level, DamageSource damageSource, CallbackInfo callback) {
         if (!(damageSource.getEntity() instanceof Player player)) return;
         Registry<Enchantment> enchantments = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         java.util.Optional<Holder.Reference<Enchantment>> capturing = enchantments.get(CAPTURING);
