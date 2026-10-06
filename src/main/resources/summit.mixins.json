@@ -6,6 +6,9 @@
     "SugarCaneBlockMixin",
     "BaseSpawnerMixin",
     "SpawnerBlockMixin",
+    "SpawnerBlockEntityMixin",
+    "SpawnerBlockDropsMixin",
+    "MobMixin",
     "LivingEntityMixin"
   ],
   "injectors": {

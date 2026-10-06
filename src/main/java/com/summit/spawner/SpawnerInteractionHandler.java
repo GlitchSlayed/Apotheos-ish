@@ -3,8 +3,6 @@ package com.summit.spawner;
 import com.summit.config.SummitConfig;
 import com.summit.Summit;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,16 +30,12 @@ public final class SpawnerInteractionHandler {
             holdingQuartzOffhand = true;
         }
 
-        SpawnerModifiers modifiers = getOrCreateModifiers(spawner);
-        if (modifiers == null) return InteractionResult.PASS;
-
+        SpawnerModifiers modifiers = SpawnerBlockEntityHelper.getModifiers(spawner);
         boolean isCreative = player.getAbilities().instabuild;
 
-        // Try to match a modifier recipe
         ModifierRecipe recipe = ModifierRecipeRegistry.find(heldItem, holdingQuartzOffhand);
         if (recipe == null) return InteractionResult.PASS;
 
-        // Check if the stat can change further
         if (!recipe.canApply(modifiers)) {
             if (!isCreative) {
                 player.sendSystemMessage(Component.translatable("text.summit.spawner.modifier.cannot_apply"));
@@ -49,13 +43,12 @@ public final class SpawnerInteractionHandler {
             return InteractionResult.CONSUME;
         }
 
-        // Apply the recipe
         recipe.apply(modifiers);
         modifiers.playerModified = true;
+        SpawnerBlockEntityHelper.setModifiers(spawner, modifiers);
         spawner.setChanged();
         spawner.getLevel().sendBlockUpdated(pos, state, state, 1);
 
-        // Consume ingredient only in survival and only on success
         if (!isCreative) {
             player.getItemInHand(hand).shrink(1);
         }
@@ -63,25 +56,6 @@ public final class SpawnerInteractionHandler {
         player.sendSystemMessage(Component.translatable("text.summit.spawner.modifier.applied", heldItem.getName(player.getItemInHand(hand)).getString()));
 
         return InteractionResult.CONSUME;
-    }
-
-    public static SpawnerModifiers getOrCreateModifiers(SpawnerBlockEntity spawner) {
-        HolderLookup.Provider provider = spawner.getLevel().registryAccess();
-        CompoundTag tag = spawner.getUpdateTag(provider);
-        SpawnerModifiers modifiers = new SpawnerModifiers();
-        if (tag.contains(SpawnerModifiers.NBT_KEY)) {
-            modifiers.readNbt(tag.getCompound(SpawnerModifiers.NBT_KEY).orElse(new CompoundTag()));
-        } else {
-            modifiers.reset();
-        }
-        return modifiers;
-    }
-
-    public static void saveModifiers(SpawnerBlockEntity spawner, SpawnerModifiers modifiers) {
-        HolderLookup.Provider provider = spawner.getLevel().registryAccess();
-        CompoundTag tag = spawner.getUpdateTag(provider);
-        modifiers.writeNbt(tag.getCompound(SpawnerModifiers.NBT_KEY).orElseGet(CompoundTag::new));
-        spawner.setChanged();
     }
 
     public static AABB getSpawnAABB(BlockPos pos, int range) {

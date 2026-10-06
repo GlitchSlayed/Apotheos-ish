@@ -1,10 +1,11 @@
 package com.summit.mixin;
 
-import com.summit.config.SummitConfig;
+import com.summit.spawner.DespawnGrace;
 import com.summit.spawner.SpawnerBlockEntityHelper;
 import com.summit.spawner.SpawnerModifiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,6 +39,14 @@ public abstract class BaseSpawnerMixin {
     @Redirect(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z"))
     private boolean summit$ignorePlayerRequirement(BaseSpawner spawner, ServerLevel level, BlockPos position) {
         return getSummitModifiers(level, position).ignorePlayers || isNearPlayer(level, position);
+    }
+
+    @Redirect(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;tryAddFreshEntityWithPassengers(Lnet/minecraft/world/entity/Entity;)Z"))
+    private boolean summit$applyGracePeriod(ServerLevel level, Entity entity) {
+        if (entity instanceof net.minecraft.world.entity.Mob mob) {
+            DespawnGrace.apply(mob, com.summit.config.SummitConfig.get().spawnerModule.despawnGracePeriod);
+        }
+        return level.tryAddFreshEntityWithPassengers(entity);
     }
 
     @Shadow

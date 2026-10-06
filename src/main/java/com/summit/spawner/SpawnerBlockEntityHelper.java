@@ -1,47 +1,36 @@
 package com.summit.spawner;
 
-import com.summit.config.SummitConfig;
-import com.summit.Summit;
-import net.minecraft.core.HolderLookup;
+import com.summit.mixin.SpawnerBlockEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
-/**
- * Utility methods for working with spawner modifier data on SpawnerBlockEntities.
- */
 public final class SpawnerBlockEntityHelper {
 
     public static SpawnerModifiers getModifiers(SpawnerBlockEntity spawner) {
-        HolderLookup.Provider provider = spawner.getLevel().registryAccess();
-        CompoundTag tag = spawner.getUpdateTag(provider);
-        SpawnerModifiers modifiers = new SpawnerModifiers();
-        if (tag.contains(SpawnerModifiers.NBT_KEY)) {
-            modifiers.readNbt(tag.getCompound(SpawnerModifiers.NBT_KEY).orElse(new CompoundTag()));
-        } else {
-            modifiers.reset();
+        if (spawner instanceof SpawnerBlockEntityAccessor accessor) {
+            SpawnerModifiers modifiers = accessor.summit$getModifiers();
+            if (modifiers != null) return modifiers;
         }
-        return modifiers;
+        return new SpawnerModifiers();
     }
 
     public static void setModifiers(SpawnerBlockEntity spawner, SpawnerModifiers modifiers) {
-        HolderLookup.Provider provider = spawner.getLevel().registryAccess();
-        CompoundTag tag = spawner.getUpdateTag(provider);
-        modifiers.writeNbt(tag.getCompound(SpawnerModifiers.NBT_KEY).orElseGet(CompoundTag::new));
-        spawner.setChanged();
+        if (spawner instanceof SpawnerBlockEntityAccessor accessor) {
+            accessor.summit$setModifiers(modifiers);
+        }
     }
 
     public static boolean hasModifiers(SpawnerBlockEntity spawner) {
-        HolderLookup.Provider provider = spawner.getLevel().registryAccess();
-        return spawner.getUpdateTag(provider).contains(SpawnerModifiers.NBT_KEY);
+        if (spawner instanceof SpawnerBlockEntityAccessor accessor) {
+            return accessor.summit$getModifiers() != null;
+        }
+        return false;
     }
 
     public static void clearModifiers(SpawnerBlockEntity spawner) {
-        HolderLookup.Provider provider = spawner.getLevel().registryAccess();
-        CompoundTag tag = spawner.getUpdateTag(provider);
-        if (tag.contains(SpawnerModifiers.NBT_KEY)) {
-            tag.remove(SpawnerModifiers.NBT_KEY);
-            spawner.setChanged();
+        if (spawner instanceof SpawnerBlockEntityAccessor accessor) {
+            accessor.summit$setModifiers(null);
         }
     }
 }
