@@ -10,13 +10,13 @@ import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-/** The client UI edits the common config file; use it on the server for authoritative spawning rules. */
 public final class SummitConfigScreen {
     private SummitConfigScreen() { }
 
     public static Screen create(Screen parent) {
         SummitConfig config = SummitConfig.get();
         SummitConfig.SpawnerSettings spawner = config.spawner;
+        SummitConfig.SpawnerModuleSettings module = config.spawnerModule;
         return YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable("text.summit.config.title"))
                 .category(ConfigCategory.createBuilder()
@@ -41,7 +41,19 @@ public final class SummitConfigScreen {
                         .option(booleanOption("text.summit.config.silent", () -> spawner.silent, value -> spawner.silent = value))
                         .option(booleanOption("text.summit.config.youthful", () -> spawner.youthful, value -> spawner.youthful = value))
                         .option(booleanOption("text.summit.config.burning", () -> spawner.burning, value -> spawner.burning = value))
-                        .option(booleanOption("text.summit.config.echoing", () -> spawner.echoing, value -> spawner.echoing = value))
+                        .option(integerOption("text.summit.config.echoing", 0, 3, () -> spawner.echoing, value -> spawner.echoing = value))
+                        .build())
+                .category(ConfigCategory.createBuilder()
+                        .name(Component.translatable("text.summit.config.spawner_module"))
+                        .option(booleanOption("text.summit.config.spawner_module_enabled", () -> module.enabled, value -> module.enabled = value))
+                        .option(integerOption("text.summit.config.silk_touch_level", 1, 5, () -> module.silkTouchLevel, value -> module.silkTouchLevel = value))
+                        .option(integerOption("text.summit.config.silk_touch_durability_cost", 0, 1000, () -> module.silkTouchDurabilityCost, value -> module.silkTouchDurabilityCost = value))
+                        .option(booleanOption("text.summit.config.spawners_drop_empty", () -> module.spawnersDropEmpty, value -> module.spawnersDropEmpty = value))
+                        .option(integerOption("text.summit.config.despawn_grace_period", 0, 3600, () -> module.despawnGracePeriod, value -> module.despawnGracePeriod = value))
+                        .option(booleanOption("text.summit.config.capturing_enabled", () -> module.capturingEnabled, value -> module.capturingEnabled = value))
+                        .option(booleanOption("text.summit.config.spawner_harvesting_enabled", () -> module.spawnerHarvestingEnabled, value -> module.spawnerHarvestingEnabled = value))
+                        .option(booleanOption("text.summit.config.modifier_recipes_enabled", () -> module.modifierRecipesEnabled, value -> module.modifierRecipesEnabled = value))
+                        .option(booleanOption("text.summit.config.show_stats_in_tooltip", () -> module.showStatsInTooltip, value -> module.showStatsInTooltip = value))
                         .build())
                 .save(SummitConfig::save)
                 .build()

@@ -1,16 +1,17 @@
 {
-	"required": true,
-	"package": "com.summit.mixin",
-	"compatibilityLevel": "JAVA_25",
-	"mixins": [
-		"SugarCaneBlockMixin",
-		"BaseSpawnerMixin",
-		"LivingEntityMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	},
-	"overwrites": {
-		"requireAnnotations": true
-	}
+  "required": true,
+  "package": "com.summit.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "SugarCaneBlockMixin",
+    "BaseSpawnerMixin",
+    "SpawnerBlockMixin",
+    "LivingEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
 }

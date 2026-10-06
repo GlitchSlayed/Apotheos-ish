@@ -17,6 +17,7 @@ public final class SummitConfig {
 
     public int sugarCaneMaxHeight = 30;
     public final SpawnerSettings spawner = new SpawnerSettings();
+    public final SpawnerModuleSettings spawnerModule = new SpawnerModuleSettings();
 
     public static SummitConfig get() {
         return instance;
@@ -28,7 +29,7 @@ public final class SummitConfig {
                 instance = GSON.fromJson(Files.readString(FILE), SummitConfig.class);
                 if (instance == null) instance = new SummitConfig();
             }
-            save(); // Creates a documented default config on first launch.
+            save();
         } catch (IOException exception) {
             Summit.LOGGER.error("Could not load Summit config", exception);
         }
@@ -50,7 +51,6 @@ public final class SummitConfig {
         public int maxNearbyEntities = 6;
         public int requiredPlayerRange = 16;
         public int spawnRange = 4;
-        /** Percentage of the target's normal max health; 100 is normal health. */
         public int initialHealth = 100;
         public boolean ignorePlayers = false;
         public boolean ignoreConditions = false;
@@ -60,6 +60,21 @@ public final class SummitConfig {
         public boolean silent = false;
         public boolean youthful = false;
         public boolean burning = false;
-        public boolean echoing = false;
+        public int echoing = 0;
+    }
+
+    public static final class SpawnerModuleSettings {
+        public boolean enabled = true;
+        public int silkTouchLevel = 1;
+        public int silkTouchDurabilityCost = 100;
+        public boolean spawnersDropEmpty = false;
+        public int despawnGracePeriod = 600;
+        public int maxEchoing = 3;
+        public boolean capturingEnabled = true;
+        public float[] capturingChances = {0.005f, 0.01f, 0.02f, 0.03f, 0.05f};
+        public boolean spawnerHarvestingEnabled = true;
+        public boolean modifierRecipesEnabled = true;
+        public boolean showStatsInTooltip = true;
+        public boolean showModifierInfoInRecipeViewers = true;
     }
 }

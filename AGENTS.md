@@ -44,3 +44,24 @@ Summit is a modern, vanilla-friendly Fabric mod (reimagining of Apotheosis) for 
 - SugarCaneBlockMixin overrides `getBlocksToGrowUpTo` for configurable height
 - Data generator entrypoint exists but is empty (for future data gen)
 - Ref folder contains Minecraft 26.3 client source and fabric docs
+
+## Current Session Notes - 2026-10-06
+
+### Completed
+- Renamed mod from Apotheos-ish to Summit (package, mod ID, resources, mixins)
+- Pushed rename to GitHub (https://github.com/GlitchSlayed/Apotheos-ish)
+- Updated README.md for GitHub
+- Created spawner module skeleton in `src/main/java/com/summit/spawner/`
+- Added SpawnerModuleSettings to SummitConfig
+- Updated lang file with spawner keys
+- Created entity blacklist tag at `data/c/tags/entity/blacklisted_from_spawners.json`
+
+### Blockers / Next Steps
+- `./gradlew build` compiles successfully (all compilation errors fixed)
+- Remaining checklist:
+  - Silk touch harvesting for spawners
+  - Spawner persistence through world saves
+  - Despawn grace period
+  - Spawner item tooltips with stats
+  - Advancements JSONs
+  - Push changes to GitHub after completing remaining features

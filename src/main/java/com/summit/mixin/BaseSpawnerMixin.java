@@ -1,9 +1,12 @@
 package com.summit.mixin;
 
 import com.summit.config.SummitConfig;
+import com.summit.spawner.SpawnerBlockEntityHelper;
+import com.summit.spawner.SpawnerModifiers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BaseSpawner;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/** Applies the configured spawner defaults without replacing vanilla's spawning algorithm. */
 @Mixin(BaseSpawner.class)
 public abstract class BaseSpawnerMixin {
     @Shadow private int minSpawnDelay;
@@ -20,22 +22,33 @@ public abstract class BaseSpawnerMixin {
     @Shadow private int maxNearbyEntities;
     @Shadow private int requiredPlayerRange;
     @Shadow private int spawnRange;
-    @Shadow protected abstract boolean isNearPlayer(ServerLevel level, BlockPos position);
 
     @Inject(method = "serverTick", at = @At("HEAD"), cancellable = true)
     private void summit$applyConfiguredStats(ServerLevel level, BlockPos position, CallbackInfo callback) {
-        ApotheosIshConfig.SpawnerSettings settings = SummitConfig.get().spawner;
-        minSpawnDelay = Math.max(0, settings.minimumSpawnDelay);
-        maxSpawnDelay = Math.max(minSpawnDelay, settings.maximumSpawnDelay);
-        spawnCount = Math.max(1, settings.spawnCount);
-        maxNearbyEntities = Math.max(1, settings.maxNearbyEntities);
-        requiredPlayerRange = Math.max(1, settings.requiredPlayerRange);
-        spawnRange = Math.max(1, settings.spawnRange);
-        if (settings.redstoneControl && !level.hasNeighborSignal(position)) callback.cancel();
+        SpawnerModifiers modifiers = getSummitModifiers(level, position);
+        minSpawnDelay = Math.max(0, modifiers.minSpawnDelay);
+        maxSpawnDelay = Math.max(minSpawnDelay, modifiers.maxSpawnDelay);
+        spawnCount = Math.max(1, modifiers.spawnCount);
+        maxNearbyEntities = Math.max(1, modifiers.maxNearbyEntities);
+        requiredPlayerRange = Math.max(1, modifiers.requiredPlayerRange);
+        spawnRange = Math.max(1, modifiers.spawnRange);
+        if (modifiers.redstoneControl && !level.hasNeighborSignal(position)) callback.cancel();
     }
 
     @Redirect(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z"))
     private boolean summit$ignorePlayerRequirement(BaseSpawner spawner, ServerLevel level, BlockPos position) {
-        return SummitConfig.get().spawner.ignorePlayers || this.isNearPlayer(level, position);
+        return getSummitModifiers(level, position).ignorePlayers || isNearPlayer(level, position);
+    }
+
+    @Shadow
+    private boolean isNearPlayer(ServerLevel level, BlockPos position) {
+        return false;
+    }
+
+    private SpawnerModifiers getSummitModifiers(ServerLevel level, BlockPos position) {
+        if (level.getBlockEntity(position) instanceof net.minecraft.world.level.block.entity.SpawnerBlockEntity spawner) {
+            return SpawnerBlockEntityHelper.getModifiers(spawner);
+        }
+        return new SpawnerModifiers();
     }
 }
