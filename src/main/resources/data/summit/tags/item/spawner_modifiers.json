@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:sugar",
+    "minecraft:clock",
+    "minecraft:fermented_spider_eye",
+    "minecraft:ghast_tear",
+    "minecraft:prismarine_crystals",
+    "minecraft:piston",
+    "minecraft:pointed_dripstone",
+    "minecraft:nether_star",
+    "minecraft:conduit",
+    "minecraft:redstone_comparator",
+    "minecraft:soul_lantern",
+    "minecraft:chorus_fruit",
+    "minecraft:white_wool",
+    "minecraft:turtle_egg",
+    "minecraft:campfire",
+    "minecraft:echo_shard"
+  ]
+}

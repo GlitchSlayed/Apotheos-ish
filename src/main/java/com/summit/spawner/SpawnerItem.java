@@ -47,13 +47,23 @@ public class SpawnerItem extends Item {
         if (modifiers.burning) tooltip.accept(Component.translatable("item.summit.spawner.tooltip.burning").withStyle(ChatFormatting.BLUE));
         if (modifiers.playerModified) tooltip.accept(Component.translatable("item.summit.spawner.tooltip.modified").withStyle(ChatFormatting.GREEN));
 
-        tooltip.accept(Component.translatable("item.summit.spawner.tooltip.delay", modifiers.minSpawnDelay, modifiers.maxSpawnDelay).withStyle(ChatFormatting.WHITE));
-        tooltip.accept(Component.translatable("item.summit.spawner.tooltip.count", modifiers.spawnCount).withStyle(ChatFormatting.WHITE));
-        tooltip.accept(Component.translatable("item.summit.spawner.tooltip.nearby", modifiers.maxNearbyEntities).withStyle(ChatFormatting.WHITE));
-        tooltip.accept(Component.translatable("item.summit.spawner.tooltip.range", modifiers.requiredPlayerRange, modifiers.spawnRange).withStyle(ChatFormatting.WHITE));
+        // Delay: show current values with delta from defaults
+        tooltip.accept(Component.translatable("item.summit.spawner.tooltip.delay", 
+                modifiers.minSpawnDelay, modifiers.maxSpawnDelay,
+                modifiers.minSpawnDelay - 200, modifiers.maxSpawnDelay - 800).withStyle(ChatFormatting.WHITE));
+        // Spawn count
+        tooltip.accept(Component.translatable("item.summit.spawner.tooltip.count", modifiers.spawnCount, modifiers.spawnCount - 4).withStyle(ChatFormatting.WHITE));
+        // Max nearby
+        tooltip.accept(Component.translatable("item.summit.spawner.tooltip.nearby", modifiers.maxNearbyEntities, modifiers.maxNearbyEntities - 6).withStyle(ChatFormatting.WHITE));
+        // Range: required player range and spawn range
+        tooltip.accept(Component.translatable("item.summit.spawner.tooltip.range", 
+                modifiers.requiredPlayerRange, modifiers.requiredPlayerRange - 16,
+                modifiers.spawnRange, modifiers.spawnRange - 4).withStyle(ChatFormatting.WHITE));
+        // Initial health
         if (modifiers.initialHealth != 100) {
-            tooltip.accept(Component.translatable("item.summit.spawner.tooltip.health", modifiers.initialHealth).withStyle(ChatFormatting.WHITE));
+            tooltip.accept(Component.translatable("item.summit.spawner.tooltip.health", modifiers.initialHealth, modifiers.initialHealth - 100).withStyle(ChatFormatting.WHITE));
         }
+        // Echoing
         if (modifiers.echoing > 0) {
             tooltip.accept(Component.translatable("item.summit.spawner.tooltip.echoing", modifiers.echoing).withStyle(ChatFormatting.WHITE));
         }
