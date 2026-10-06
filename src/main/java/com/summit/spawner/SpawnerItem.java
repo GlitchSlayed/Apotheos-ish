@@ -2,7 +2,10 @@ package com.summit.spawner;
 
 import com.summit.Summit;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -14,7 +17,10 @@ import java.util.function.Consumer;
 public class SpawnerItem extends Item {
 
     public SpawnerItem() {
-        super(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1));
+        super(new Item.Properties()
+                .setId(ResourceKey.create(Registries.ITEM, Summit.id("spawner")))
+                .rarity(Rarity.EPIC)
+                .stacksTo(1));
     }
 
     @Override
