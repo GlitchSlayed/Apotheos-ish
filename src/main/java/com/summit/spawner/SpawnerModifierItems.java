@@ -1,33 +1,28 @@
 package com.summit.spawner;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.Items;
 
 /**
- * Spawner modifier items that can be right-clicked on spawners to apply upgrades.
- * Each item corresponds to a specific modifier stat.
+ * Spawner modifier ingredients mapped to the stat they modify.
+ * Defaults can be overridden in config; names reflect the modified stat.
  */
 public final class SpawnerModifierItems {
-    public static final Item SUGAR = register("sugar", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item CLOCK = register("clock", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item FERMENTED_SPIDER_EYE = register("fermented_spider_eye", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item GHAST_TEAR = register("ghast_tear", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item PRISMARINE_CRYSTAL = register("prismarine_crystal", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item PISTON = register("piston", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item POINTED_DRIPSTONE = register("pointed_dripstone", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item NETHER_STAR = register("nether_star", new Item(new Item.Properties().rarity(Rarity.EPIC)));
-    public static final Item CONDUIT = register("conduit", new Item(new Item.Properties().rarity(Rarity.RARE)));
-    public static final Item REDSTONE_COMPARATOR = register("redstone_comparator", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item SOUL_LANTERN = register("soul_lantern", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item CHORUS_FRUIT = register("chorus_fruit", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item WOOL = register("wool", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item TURTLE_EGG = register("turtle_egg", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item CAMPFIRE = register("campfire", new Item(new Item.Properties().rarity(Rarity.COMMON)));
-    public static final Item ECHO_SHARD = register("echo_shard", new Item(new Item.Properties().rarity(Rarity.RARE)));
-
-    private static Item register(String name, Item item) {
-        return net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.ITEM, com.summit.Summit.id("spawner_modifier/" + name), item);
-    }
+    public static final Item MIN_SPAWN_DELAY = Items.SUGAR;
+    public static final Item MAX_SPAWN_DELAY = Items.CLOCK;
+    public static final Item SPAWN_COUNT = Items.FERMENTED_SPIDER_EYE;
+    public static final Item MAX_NEARBY_ENTITIES = Items.GHAST_TEAR;
+    public static final Item REQUIRED_PLAYER_RANGE = Items.PRISMARINE_CRYSTALS;
+    public static final Item SPAWN_RANGE = Items.PISTON;
+    public static final Item INITIAL_HEALTH = Items.POINTED_DRIPSTONE;
+    public static final Item ECHOING = Items.ECHO_SHARD;
+    public static final Item MAX_NEARBY_ENTITIES_INVERSE = Items.PRISMARINE_CRYSTALS;
+    public static final Item REQUIRED_PLAYER_RANGE_INVERSE = Items.PRISMARINE_CRYSTALS;
+    public static final Item SPAWN_RANGE_INVERSE = Items.PISTON;
+    public static final Item MIN_SPAWN_DELAY_INVERSE = Items.SUGAR;
+    public static final Item MAX_SPAWN_DELAY_INVERSE = Items.CLOCK;
+    public static final Item SPAWN_COUNT_INVERSE = Items.FERMENTED_SPIDER_EYE;
+    public static final Item MAX_NEARBY_ENTITIES_INVERSE_ALT = Items.GHAST_TEAR;
 
     private SpawnerModifierItems() { }
 }
