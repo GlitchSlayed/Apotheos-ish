@@ -1,11 +1,12 @@
 package com.summit;
 
-import net.fabricmc.api.ModInitializer;
-
 import com.summit.config.SummitConfig;
 import com.summit.registry.SummitItems;
-
+import com.summit.spawner.SummitDataComponents;
+import net.fabricmc.api.ModInitializer;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.Identifier;
+import net.minecraft.core.component.DataComponentType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,10 @@ public class Summit implements ModInitializer {
 
 		SummitItems.initialize();
 		SummitConfig.load();
+		
+		// Register custom data components
+		Registry.register(net.minecraft.core.registries.BuiltInRegistries.DATA_COMPONENT_TYPE, Summit.id("spawner_modifiers"), SummitDataComponents.SPAWNER_MODIFIERS);
+		
 		LOGGER.info("Loaded Summit configuration.");
 	}
 
