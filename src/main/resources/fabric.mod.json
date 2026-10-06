@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
-	"id": "apotheos-ish",
+	"id": "summit",
 	"version": "${version}",
-	"name": "Apotheos-ish",
+	"name": "Summit",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
 		"Me!"
@@ -12,23 +12,23 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/apotheos-ish/icon.png",
+	"icon": "assets/summit/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.apotheosish.ApotheosIsh"
+			"com.summit.Summit"
 		],
 		"client": [
-			"com.apotheosish.client.ApotheosIshClient"
+			"com.summit.client.SummitClient"
 		],
 		"fabric-datagen": [
-			"com.apotheosish.client.ApotheosIshDataGenerator"
+			"com.summit.client.SummitDataGenerator"
 		]
 	},
 	"mixins": [
-		"apotheos-ish.mixins.json",
+		"summit.mixins.json",
 		{
-			"config": "apotheos-ish.client.mixins.json",
+			"config": "summit.client.mixins.json",
 			"environment": "client"
 		}
 	],

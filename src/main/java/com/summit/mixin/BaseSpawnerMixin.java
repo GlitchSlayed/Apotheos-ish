@@ -1,6 +1,6 @@
-package com.apotheosish.mixin;
+package com.summit.mixin;
 
-import com.apotheosish.config.ApotheosIshConfig;
+import com.summit.config.SummitConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BaseSpawner;
@@ -23,8 +23,8 @@ public abstract class BaseSpawnerMixin {
     @Shadow protected abstract boolean isNearPlayer(ServerLevel level, BlockPos position);
 
     @Inject(method = "serverTick", at = @At("HEAD"), cancellable = true)
-    private void apotheosIsh$applyConfiguredStats(ServerLevel level, BlockPos position, CallbackInfo callback) {
-        ApotheosIshConfig.SpawnerSettings settings = ApotheosIshConfig.get().spawner;
+    private void summit$applyConfiguredStats(ServerLevel level, BlockPos position, CallbackInfo callback) {
+        ApotheosIshConfig.SpawnerSettings settings = SummitConfig.get().spawner;
         minSpawnDelay = Math.max(0, settings.minimumSpawnDelay);
         maxSpawnDelay = Math.max(minSpawnDelay, settings.maximumSpawnDelay);
         spawnCount = Math.max(1, settings.spawnCount);
@@ -35,7 +35,7 @@ public abstract class BaseSpawnerMixin {
     }
 
     @Redirect(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z"))
-    private boolean apotheosIsh$ignorePlayerRequirement(BaseSpawner spawner, ServerLevel level, BlockPos position) {
-        return ApotheosIshConfig.get().spawner.ignorePlayers || this.isNearPlayer(level, position);
+    private boolean summit$ignorePlayerRequirement(BaseSpawner spawner, ServerLevel level, BlockPos position) {
+        return SummitConfig.get().spawner.ignorePlayers || this.isNearPlayer(level, position);
     }
 }
