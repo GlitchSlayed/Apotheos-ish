@@ -1,36 +1,35 @@
 package com.summit.spawner;
 
-import com.summit.mixin.SpawnerBlockEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public final class SpawnerBlockEntityHelper {
 
+    private static final Map<BlockPos, SpawnerModifiers> MODIFIERS = new HashMap<>();
+
     public static SpawnerModifiers getModifiers(SpawnerBlockEntity spawner) {
-        if (spawner instanceof SpawnerBlockEntityAccessor accessor) {
-            SpawnerModifiers modifiers = accessor.summit$getModifiers();
-            if (modifiers != null) return modifiers;
-        }
-        return new SpawnerModifiers();
+        return MODIFIERS.getOrDefault(spawner.getBlockPos(), new SpawnerModifiers());
     }
 
     public static void setModifiers(SpawnerBlockEntity spawner, SpawnerModifiers modifiers) {
-        if (spawner instanceof SpawnerBlockEntityAccessor accessor) {
-            accessor.summit$setModifiers(modifiers);
-        }
+        MODIFIERS.put(spawner.getBlockPos(), modifiers);
     }
 
     public static boolean hasModifiers(SpawnerBlockEntity spawner) {
-        if (spawner instanceof SpawnerBlockEntityAccessor accessor) {
-            return accessor.summit$getModifiers() != null;
-        }
-        return false;
+        return MODIFIERS.containsKey(spawner.getBlockPos());
     }
 
     public static void clearModifiers(SpawnerBlockEntity spawner) {
-        if (spawner instanceof SpawnerBlockEntityAccessor accessor) {
-            accessor.summit$setModifiers(null);
-        }
+        MODIFIERS.remove(spawner.getBlockPos());
     }
+
+    public static void onLoaded(SpawnerBlockEntity spawner, SpawnerModifiers modifiers) {
+        MODIFIERS.put(spawner.getBlockPos(), modifiers);
+    }
+
+    private SpawnerBlockEntityHelper() {}
 }
